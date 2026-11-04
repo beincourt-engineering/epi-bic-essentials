@@ -154,8 +154,7 @@ addition to any per-device messengers.
 
 ## Client-side architecture (React)
 
-`@pepperdash/mobile-control-react-app-core` provides the client building blocks used by apps like
-[beincourt-pv2-react-app](https://github.com/pepperdash-beincourt/beincourt-pv2-react-app):
+`@pepperdash/mobile-control-react-app-core` provides the client building blocks used by Mobile Control React apps:
 
 ### Connection lifecycle
 
