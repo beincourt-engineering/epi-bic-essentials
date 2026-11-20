@@ -53,6 +53,11 @@ namespace PepperDash.Essentials.WebSocketServer
         private HttpServer _server;
 
         /// <summary>
+        /// How long a client has to answer the server's once-a-minute ping before it is closed as inactive.
+        /// </summary>
+        internal const int PongWaitSeconds = 10;
+
+        /// <summary>
         /// Gets the HttpServer instance
         /// </summary>
         public HttpServer Server => _server;
@@ -724,6 +729,12 @@ namespace PepperDash.Essentials.WebSocketServer
 
                 // setting to trace to allow logging level to be controlled by appdebug
                 _server.Log.Level = LogLevel.Trace;
+
+                // The server pings every client once a minute and closes (1006) any whose pong takes longer
+                // than WaitTime. The library default of 1 s drops healthy clients that are briefly busy,
+                // such as a touch panel still applying the full state sent after it reconnects; the next
+                // sweep then catches it again. Allow longer for the pong. Must be set before Start().
+                _server.WaitTime = TimeSpan.FromSeconds(PongWaitSeconds);
 
                 CrestronEnvironment.ProgramStatusEventHandler += CrestronEnvironment_ProgramStatusEventHandler;
 
